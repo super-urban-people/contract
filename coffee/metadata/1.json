@@ -1,0 +1,8 @@
+{
+	"name": "Hot Coffee",
+	"description": "Hot Coffee NFT",
+	"image": "ipfs://QmZdi5UPS43Fn6eh31PeRELMuC5kcY3ecAwRRvYL1A4iyE/hot.png",
+	"properties": {
+		"type": "Hot"
+	}
+}

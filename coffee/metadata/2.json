@@ -1,0 +1,8 @@
+{
+	"name": "Iced Coffee",
+	"description": "Iced Coffee NFT",
+	"image": "ipfs://QmZdi5UPS43Fn6eh31PeRELMuC5kcY3ecAwRRvYL1A4iyE/iced.png",
+	"properties": {
+		"type": "Iced"
+	}
+}
