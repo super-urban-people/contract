@@ -9,9 +9,9 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /// @custom:security-contact superurbanpeople@gmail.com
 contract CoffeeHouse is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
-    address _mintTokenAddress = 0x4800CD8197c015fB6975D6b603f62bB429729Eba;
+    address _mintTokenAddress = 0x171e7C3Aa467CBE972A1596e14124BeC5Df0AB7A;
     IERC20 private mintToken;
-    uint256[] public prices = [50 ether, 55 ether]; // Hot, Ice
+    uint256[] public prices = [2000 ether, 2500 ether]; // Hot, Ice
     string[] public messages;
     uint256 public wallSize = 10;
     uint256 public textLimit = 140;
@@ -22,10 +22,13 @@ contract CoffeeHouse is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         mintToken = IERC20(_mintTokenAddress);
         _resetWall();
     }
+    function getMessages() public view virtual returns (string[] memory){
+        return messages;
+    }
     function _resetWall() internal{
         messages = new string[](wallSize);
         for( uint256 i = 0; i<wallSize ; i++){
-            messages[i] = "drink a coffee";
+            messages[i] = "Write a message with SUP Coffee NFT";
         }
     }
 
@@ -57,7 +60,7 @@ contract CoffeeHouse is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
         uint256 totalPrice = amount * prices[index];
 
         require(mintToken.allowance(msg.sender, address(this)) >= totalPrice, "Not enough allowance");
-        mintToken.transferFrom(msg.sender, address(this), totalPrice);
+        mintToken.transferFrom(msg.sender, owner(), totalPrice);
 
         _mint(msg.sender, id, amount, "");
     }
@@ -91,7 +94,11 @@ contract CoffeeHouse is ERC1155, Ownable, ERC1155Burnable, ERC1155Supply {
             if ( rev >= amount ){
                 messages[rev] = messages[rev-amount];
             }else{
-                messages[rev] = message;                    
+                if( id == 2 ) {
+                    messages[rev] = string(abi.encodePacked("(*) ", message));
+                }else{
+                    messages[rev] = string(abi.encodePacked("( ) ", message));
+                }
             }
         }
         burn(msg.sender, id, amount);
